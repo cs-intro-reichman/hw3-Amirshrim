@@ -1,4 +1,5 @@
 /** Functions for checking if a given string is an anagram. */
+import java.util.Random;
 public class Anagram {
 	public static void main(String args[]) {
 		// Tests the isAnagram function.
@@ -28,22 +29,52 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
-		return false;
-	}
+    String first = preProcess(str2);
+    String second = preProcess(str1);
+
+    if(first.length() != second.length()){
+        return false;
+    }
+
+    for(int i = 0; i < second.length(); i++){
+        char c = second.charAt(i);
+        int index = first.indexOf(c);  
+        if(index != -1){
+            first = first.substring(0, index) + first.substring(index + 1);
+        } else {
+            return false;
+        }
+    }
+    return true;
+}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
-	} 
+    String process = "";
+    for (int i = 0; i < str.length(); i++) {
+        char c = str.charAt(i);
+        if (Character.isLetter(c)) {     
+            process = process + Character.toLowerCase(c); 
+        }
+    }
+    return process;
+}
 	   
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
+	
 	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
-		return "";
+		Random rand = new Random();
+		String result = "";
+		String string= str;
+		while (string.length()>0){
+			int i = rand.nextInt(string.length());
+			char c = string.charAt(i); 
+			result = result + c;
+			string = string.substring(0, i) + string.substring(i + 1);
+		}
+		return result;
 	}
 }
